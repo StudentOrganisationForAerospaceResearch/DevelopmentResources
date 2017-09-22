@@ -4,7 +4,7 @@ All changes to master branches of repositories in SOAR must be done through a pu
 Mandating pull-requests serves two main purposes.
 
 .  All code is reviewed by someone other than the author before being used.
-.  Members of the Solar Car Team learn how to do pull-requests so that they can contribute to other open-source projects.
+.  Members SOAR learn how to do pull requests so that they can contribute to other open source projects.
 
 == How to Make a Pull Request
 
@@ -34,7 +34,7 @@ To promote pull request responses that are kind and helpful, take these steps in
 . *Is the purpose of the pull request sound?* Do the overall changes make sense?
 . *Is the code properly structured?* Will the code be maintainable in the future?
 . *Are there any bugs or glitches?* Test the code yourself to make sure it works.
-. *Is the coding style correct?* Does the code conform to how the rest of the project is coded? Does it follow the UCSolarCarDevelopmentGuide style guide?
+. *Is the coding style correct?* Does the code conform to how the rest of the project is coded?
 
 Especially for newcomers, make sure the pull request passes one step at a time.
 The idea is so that a pull request won't be done all at once, but in a couple "passes".
