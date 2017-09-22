@@ -1,0 +1,41 @@
+= Pull Requests
+
+All changes to master branches of repositories in SOAR must be done through a pull request.
+Mandating pull-requests serves two main purposes.
+
+.  All code is reviewed by someone other than the author before being used.
+.  Members of the Solar Car Team learn how to do pull-requests so that they can contribute to other open-source projects.
+
+== How to Make a Pull Request
+
+Here are the steps to contributing to a repository.
+The repositories can be found at https://github.com/StudentOrganisationForAerospaceResearch.
+These steps assume you have a Github account, know how to use git, and are a member of the StudentOrganisationForAerospaceResearch organization on Github.
+
+.  Go to the repository you wish to contribute to under the StudentOrganisationForAerospaceResearch.
+.  Clone the repository into your computer.
+.  Create a new branch by `git checkout -b NewBranchName`.
+.  Push the branch to the remote using the command `git push -u origin NewBranchName`.
+.  Now you can make whatever changes you wish to that branch, complete the feature or change you wish done on that branch.
+.  Once all changes on your branch have been made and you wish to merge this with the master branch, you can create the pull request on github.
+.  Click "Pull requests" on the right side, then click "New pull request" on the top right.
+.  Select the master branch on the left, then the branch you have made changes with on the right.
+.  Write a title and description of what the pull request is and includes.
+.  Wait for people to review the pull-request, then respond accordingly and let someone else merge the pull request.
+Even if you have the rights, DO NOT merge the pull request yourself.
+
+== How to Respond to a Pull Request
+
+If you have been assigned to a pull request, please respond as soon as possible.
+In general responding to a pull request should have priority over implementing other features.
+On top of the technical responsibilities of reviewing a pull request, you are also responsible for responding to a pull request in a caring fashion.
+To promote pull request responses that are kind and helpful, take these steps in responding to a pull request:
+
+. *Is the purpose of the pull request sound?* Do the overall changes make sense?
+. *Is the code properly structured?* Will the code be maintainable in the future?
+. *Are there any bugs or glitches?* Test the code yourself to make sure it works.
+. *Is the coding style correct?* Does the code conform to how the rest of the project is coded? Does it follow the UCSolarCarDevelopmentGuide style guide?
+
+Especially for newcomers, make sure the pull request passes one step at a time.
+The idea is so that a pull request won't be done all at once, but in a couple "passes".
+Once all the steps have been passed, then the pull request should be ready to be merged!
