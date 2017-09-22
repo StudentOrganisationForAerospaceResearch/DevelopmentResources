@@ -1,0 +1,140 @@
+= AsciiDoc Guide
+
+Any plain text documentation should be done in AsciiDoctor syntax in SOAR.
+Below is a guide on some basic features of Asciidoc,
+
+More information on asciidoc can be found at
+
+http://www.methods.co.nz/asciidoc/
+
+It is a good idea to preview docs at asciidoclive.
+
+https://asciidoclive.com/
+
+== Headers
+
+Writing an equals sign before a line of text will make it into a header.
+
+----
+= A Descriptive Title
+----
+
+Equals signs can be added to give preceding header levels.
+
+----
+= h1
+
+== h2
+
+=== h3
+----
+
+== Lists
+
+=== Unordererd Lists
+
+An unordered list, ie. a list of bullet points can be made with asterisks.
+
+----
+* First Item
+* Second Item
+----
+
+Will appear as:
+
+* First Item
+* Second Item
+
+=== Numbered Lists
+
+A numbered list is done with periods.
+
+----
+. Step 1
+. Step 2
+----
+
+Will appear as:
+
+. Step 1
+. Step 2
+
+=== Nested Lists
+
+Nested steps can be added by increasing the number of periods before the step.
+
+----
+. step 1
+.. step 1a
+. step 2
+----
+
+Will appear as:
+
+. step 1
+.. step 1a
+. step 2
+
+== Source Code
+
+We can show source code by surrounding the block of code with four dashes.
+For example:
+
+-----
+----
+Some Code
+----
+-----
+
+
+== Formatted Text
+
+=== Bold Text
+
+To bold text in an asciidoc place a single asterisk on each side of the phrase or word to be bolded.
+
+----
+*Bolded Statement*
+----
+
+Will appear as:
+
+*Bolded Statement*
+
+Individual parts of a word can be bolded by breaking up the word with double asterisks.
+All of the characters between two pairs of asterisks will be bolded.
+
+----
+**Bol**ded S**tate**ment
+----
+
+Will appear as:
+
+**Bol**ded S**tate**ment
+
+=== Italics
+
+To write text in italics in an asciidoc place an underscore on each side of the phrase or word to be bolded.
+
+----
+_Italics Statement_
+----
+
+Will appear as:
+
+_Italics Statement_
+
+
+Similarly to bold text, individual parts of a word can be in italics by breaking up the word with double underscores.
+
+----
+__Ita__lics S__tate__ment
+----
+
+Will appear as:
+
+__Ita__lics S__tate__ment
+
+== Conventions
+
+When writing in asciidoc it is best practice for each new sentence to be started on a new line in your text editor.
