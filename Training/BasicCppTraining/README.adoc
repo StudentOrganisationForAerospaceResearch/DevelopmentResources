@@ -1,0 +1,14 @@
+= Basic C++ Training
+
+This Exercise is designed to introduce you to the concepts of pointers, references, functions, and class creation in C++.
+
+In this exercise, you must create the `Person.cpp` file and implement the definition of all of the functions within `Person.h`.
+In addition, you must complete the definitions of `mySwap()` and `myIncrement()` and implement them in `main.cpp`.
+You are not permitted to modify anything in `Person.h` or any of the function headers. The program will verify that you have correctly completed the exercise.
+
+This project was designed for the Code::Blocks IDE, download at the link:from http://www.codeblocks.org/downloads/binaries[Codeblocks website].
+Make sure that the binary you download contains the mingw compiler, i.e `codeblocks-16.01mingw-setup.exe`
+
+== Credit
+
+Originally created by the University of Calgary Solar Car Team by Bill Luu (2017).
