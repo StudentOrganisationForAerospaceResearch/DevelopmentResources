@@ -1,4 +1,4 @@
-= U of C Solar Car Advanced Recruit Training
+= Advanced Recruit Training
 
 Intro project to learn C++ and QT
 
