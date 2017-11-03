@@ -12,9 +12,11 @@ def main():
 		print("Please specify one argument for the port")
 		return 1
 
-	# with socketserver.TCPServer(("", PORT), Handler) as httpd:
-	#     print("serving at port", PORT)
-	#     httpd.serve_forever()
+	port = int(sys.argv[1])
+
+	with socketserver.TCPServer(("", port), Handler) as httpd:
+	    print("serving at port", port)
+	    httpd.serve_forever()
 
 if __name__ == "__main__":
     main()

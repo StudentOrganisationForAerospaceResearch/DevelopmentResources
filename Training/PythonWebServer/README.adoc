@@ -1,0 +1,30 @@
+= Python Web Server Training
+
+This training involves creating a simple web server that presents information from an external location.
+
+This training aims to provide experience with the following:
+
+* Python, CSS, HTML, and Javascript
+* AJAX calls
+* Using a docker environment
+* Submitting a pull request for review
+* Creating a web server
+
+== Running the Boiler Plate
+
+The boiler plate runs on Python3, but it is recommended to run this program in Docker.
+Steps to install Docker are link:https://docs.docker.com/engine/installation/[here]
+On Windows operating systems less than Windows 10 Pro, you will need to use link:https://docs.docker.com/toolbox/toolbox_install_windows/[Docker Toolbox] instead of the default Docker installation.
+
+Follow these steps to run the program.
+
+. Verify that Docker is properly installed with `docker run hello-world`.
+
+. Then build the Docker image with `./docker-build.sh init`, you will only need to run this when the `Dockerfile` changes.
+
+. Then run the program with `./docker-build.sh run 8000`, with the last argument being whatever port you wish to run on.
+
+. You can then connect to the webserver on your web browser at http://localhost:8000
+If you are using Docker Toolbox, connect at http://192.168.99.100:8000
+Change the port number to whatever port you chose in the `./docker-build.sh run <port>` command.
+You should see a red "Hello world!" at the center of the browser.
