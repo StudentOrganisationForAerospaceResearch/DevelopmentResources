@@ -2,13 +2,17 @@
 
 This training involves creating a simple web server that presents information from an external location.
 
+.Example
+image::resources/demo.gif
+
 This training aims to provide experience with the following:
 
 * Python, CSS, HTML, and Javascript
+* Creating a web server
 * AJAX calls
 * Using a docker environment
 * Submitting a pull request for review
-* Creating a web server
+
 
 == Running the Boiler Plate
 
@@ -28,3 +32,23 @@ Follow these steps to run the program.
 If you are using Docker Toolbox, connect at http://192.168.99.100:8000
 Change the port number to whatever port you chose in the `./docker-build.sh run <port>` command.
 You should see a red "Hello world!" at the center of the browser.
+
+== List of Changes To Complete
+
+. Create a UI that looks similar to the example.
+Do not worry making an exact copy, the important parts are:
+.. Gradient background that covers the whole window
+.. Responsive button
+.. Clearly separated information sections
+.. General spacing separating various elements
+
+. Ensure the different sections are responsive to the window size.
+
+. Update the `Dockerfile` to install the `psutil` Python package.
+
+. Have the server respond to a POST request with the following information using `psutil`:
+.. The current time (does not use `psutil`)
+.. The amount of CPUs (logical processors) and the system-wide CPU utilization as a percentage
+.. The amount of total and used RAM in GB to two decimal places
+
+. Send an AJAX request when the _Update_ button is pressed and update the page with the results.

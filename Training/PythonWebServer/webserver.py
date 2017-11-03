@@ -1,22 +1,42 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
-import http.server
-import socketserver
 import sys
+from http.server import SimpleHTTPRequestHandler, HTTPServer
+from datetime import datetime
+import json
 
-Handler = http.server.SimpleHTTPRequestHandler
+import psutil
+
+
+class SoarWebServer(SimpleHTTPRequestHandler):
+
+    def do_POST(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/json')
+        self.end_headers()
+        msg = json.dumps({
+            'time': str(datetime.now())[11:19],
+            'total_cpus': str(psutil.cpu_count()),
+            'cpu_usage': str(psutil.cpu_percent(interval=1)),
+            'total_ram': "{0:.2f}".format(
+                psutil.virtual_memory().total / 1024 / 1024 / 1024),
+            'used_ram': "{0:.2f}".format(
+                psutil.virtual_memory().used / 1024 / 1024 / 1024)
+        })
+        self.wfile.write(msg.encode(encoding='utf-8'))
 
 
 def main():
-	if len(sys.argv) != 2:
-		print("Please specify one argument for the port")
-		return 1
+    if len(sys.argv) != 2:
+        print("Please specify one argument for the port")
+        return 1
 
-	port = int(sys.argv[1])
+    port = int(sys.argv[1])
+    print('Starting server on port ' + str(port) + '...')
 
-	with socketserver.TCPServer(("", port), Handler) as httpd:
-	    print("serving at port", port)
-	    httpd.serve_forever()
+    server_address = ('', port)
+    httpd = HTTPServer(server_address, SoarWebServer)
+    httpd.serve_forever()
 
 if __name__ == "__main__":
     main()
