@@ -1,0 +1,71 @@
+= Python Web Server Training
+
+This training involves creating a simple web server that presents information from an external location. The final result should look similar to the GIF below.
+
+image::resources/demo.gif[Demo]
+
+This training aims to provide experience with the following:
+
+* Python, CSS, HTML, and Javascript
+* Using a Docker environment
+* Responsive web design
+* Creating a web server
+* AJAX calls
+* Using third party packages and reading their documentaiton
+* Submitting a pull request for review
+
+
+== Running the Boiler Plate
+
+The program runs on Python3, but it is recommended to run this program in Docker.
+Steps to install Docker are link:https://docs.docker.com/engine/installation/[here].
+On Windows operating systems less than Windows 10 Pro, you will need to use link:https://docs.docker.com/toolbox/toolbox_install_windows/[Docker Toolbox] instead of the default Docker installation.
+
+Follow these steps to run the program.
+
+. Verify that Docker is properly installed with `docker run hello-world`.
+
+. Then build the Docker image with `./docker-build.sh init`, you will only need to run this when the `Dockerfile` changes.
+
+. Then run the program with `./docker-build.sh run 8000`, with the last argument being whatever port you wish to run on.
+
+. You can then connect to the web server on your a browser at http://localhost:8000.
+If you are using Docker Toolbox, connect at http://192.168.99.100:8000 instead.
+Change the port number to whatever port you chose in the `./docker-build.sh run <port>` command.
+You should see a red "Hello world!" at the center of the browser.
+
+== List of Changes To Complete
+
+. Properly error check the port argument in `webserver.py`
+
+. Create a UI that looks similar to the example.
+Do not worry making an exact copy, the important parts are:
+.. Gradient background that covers the whole window
+.. Responsive button
+.. Clearly separated information sections
+.. General spacing separating various elements
+
+. Ensure the different sections are responsive to the window size.
+
+. Update the `Dockerfile` to install the `psutil` Python package.
+
+. Have the server respond to a POST request with the following information:
+.. The current time
+.. The amount of CPUs (logical processors) and the system-wide CPU utilization as a percentage
+Use `psutil` for this information
+.. The amount of total and used RAM in GB to two decimal places
+Use `psutil` for this information
+
+. Send an AJAX request when the _Update_ button is pressed and update the page with the results.
+Use the jQuery library that has already been included.
+
+Once the above steps are completed, submit a pull request to this repository with all your changes.
+You can refer to our link:https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentResources/tree/master/Documentation/HowToPullRequest[guide] on how to submit a pull request.
+
+The only files that need to be edited for this training are:
+
+* `webserver.py`
+* `index.html`
+* `Dockerfile`
+* `resources/stylesheet.css`
+* `resources/index.js`
