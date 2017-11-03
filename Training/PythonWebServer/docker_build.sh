@@ -11,4 +11,3 @@ elif [ "$1" == "run" ]; then
 else
 	echo "usage: docker_build [init | run]"
 fi
-

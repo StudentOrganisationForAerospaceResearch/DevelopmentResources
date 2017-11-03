@@ -1,5 +1,5 @@
 FROM python:3.6.3
 
-RUN pip install psutil
+# include the psutil package here
 
 WORKDIR /python_webserver_training
