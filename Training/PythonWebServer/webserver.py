@@ -11,9 +11,9 @@ class SoarWebServer(SimpleHTTPRequestHandler):
 
 def main():
     port = int(sys.argv[1]) # Error check this!
-    print('Starting server on port ' + str(port) + '...')
+    print("Starting server on port " + str(port) + "...")
 
-    server_address = ('', port)
+    server_address = ("", port)
     httpd = HTTPServer(server_address, SoarWebServer)
     httpd.serve_forever()
 

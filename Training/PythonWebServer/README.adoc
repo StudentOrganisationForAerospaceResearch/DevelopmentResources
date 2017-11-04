@@ -25,9 +25,9 @@ Follow these steps to run the program.
 
 . Verify that Docker is properly installed with `docker run hello-world`.
 
-. Then build the Docker image with `./docker-build.sh init`, you will only need to run this when the `Dockerfile` changes.
+. Then build the Docker image with `./docker_build.sh init`, you will only need to run this when the `Dockerfile` changes.
 
-. Then run the program with `./docker-build.sh run 8000`, with the last argument being whatever port you wish to run on.
+. Then run the program with `./docker_build.sh run 8000`, with the last argument being whatever port you wish to run on.
 
 . You can then connect to the web server on your a browser at http://localhost:8000.
 If you are using Docker Toolbox, connect at http://192.168.99.100:8000 instead.
