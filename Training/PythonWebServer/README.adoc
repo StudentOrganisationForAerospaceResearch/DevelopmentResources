@@ -37,8 +37,10 @@ You should see a red "Hello world!" at the center of the browser.
 == List of Changes To Complete
 
 . Properly error check the port argument in `webserver.py`
+For this task you will only need to edit `webserver.py`.
 
 . Create a UI that looks similar to the example.
+For this task you will only need to edit `index.html` and `resources/stylesheet.css`.
 Do not worry making an exact copy, the important parts are:
 .. Gradient background that covers the whole window
 .. Responsive button
@@ -46,10 +48,13 @@ Do not worry making an exact copy, the important parts are:
 .. General spacing separating various elements
 
 . Ensure the different sections are responsive to the window size.
+For this task you will only need to edit `resources/stylesheet.css`, possibly `index.html`.
 
 . Update the `Dockerfile` to install the `psutil` Python package.
+For this task you will only need to edit `Dockerfile`.
 
 . Have the server respond to a POST request with the following information:
+For this task you will only need to edit `webserver.py`.
 .. The current time
 .. The amount of CPUs (logical processors) and the system-wide CPU utilization as a percentage
 Use `psutil` for this information
@@ -57,6 +62,7 @@ Use `psutil` for this information
 Use `psutil` for this information
 
 . Send an AJAX request when the _Update_ button is pressed and update the page with the results.
+For this task you will only need to edit `index.js`.
 Use the jQuery library that has already been included.
 
 Once the above steps are completed, submit a pull request to this repository with all your changes.
