@@ -4,7 +4,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 IMAGE_NAME="soar/python-webserver-training"
 
 if [ "$1" == "init" ]; then
-	docker build -t $IMAGE_NAME $DIR
+	docker build -t $IMAGE_NAME .
 elif [ "$1" == "run" ]; then
 	docker run --rm -v $DIR:/python_webserver_training -p $2:$2\
 		$IMAGE_NAME python3 webserver.py $2
