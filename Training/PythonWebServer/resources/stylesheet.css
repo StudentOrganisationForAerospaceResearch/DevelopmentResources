@@ -3,3 +3,10 @@ h1 {
 	text-align: center;
 	color: red;
 }
+
+.gradient {
+	height: 100%;
+	background: linear-gradient(MediumSeaGreen, #b1e7ca,  white); /* #3CB371 */
+	background-attachment: fixed; /* this seems to counteract height: 100%, since now the colour will be stuck to the background rather than fill the height of the content. Choice depends on page length and desired scroll behaviour */
+	background-repeat: no-repeat;
+}
