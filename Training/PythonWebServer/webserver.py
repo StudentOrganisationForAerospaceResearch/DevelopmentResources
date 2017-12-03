@@ -5,6 +5,9 @@ import sys, psutil, time
 
 class SoarWebServer(BaseHTTPRequestHandler):
     def setHeaders(self, MIME_Type): #TODO make this thing work
+        print("in setHeaders MIME:" + MIME_Type)
+        print("setHeaders self:" + str(self))
+        sys.stdout.flush()        
         self.send_response(200)
         self.send_header("Content-Type", MIME_Type)
         self.end_headers()
@@ -13,20 +16,34 @@ class SoarWebServer(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "text/html")
         self.end_headers()
-        self.wfile.write(bytes("\nSend your POST response here!", "utf-8"))
+        self.wfile.write(bytes("Send your POST response here!", "utf-8"))
+        
         
     def do_GET(self):
-        #setHeaders(self, "text/html")
-        self.send_response(200)
-        self.send_header("Content-Type", "text/html")
-        self.end_headers()
-
+    
+        #in addition to being a stupid and unexpandable way of serving files, this is also non-portable. But it works!
+        #it actually not too hard to use os.sep and better path managment, but...
+        if self.path == "/":
+            setHeaders(self, "text/html")
+            file = open(".\\index.html") #TODO wrap this in exception handling
+            self.wfile.write(bytes( file.read(), "utf-8" ))     
+            file.close()
+        elif self.path == "/resources/stylesheet.css":
+            setHeaders(self, "text/css")
+            file = open(".\\resources\\stylesheet.css") #TODO wrap this in exception handling
+            self.wfile.write(bytes( file.read(), "utf-8" ))     
+            file.close()
+        elif self.path == "/resources/index.js":
+            setHeaders(self, "application/javascript")
+            file = open(".\\resources\\index.js") #TODO wrap this in exception handling
+            self.wfile.write(bytes( file.read(), "utf-8" ))     
+            file.close()
         
-        #self.wfile.write(bytes("<!doctype html><body><p>This is a test.</p></body></html>", "utf-8"))
-        myIndex = open("index.html") #TODO wrap this in exception handling
-        self.wfile.write(bytes( myIndex.read(), "utf-8" ))
-        myIndex.close();
 
+def setHeaders(self, MIME_Type):
+    self.send_response(200)
+    self.send_header("Content-Type", MIME_Type)
+    self.end_headers()
     
 def main():
     if (len(sys.argv) == 1):
