@@ -13,11 +13,18 @@ class SoarWebServer(BaseHTTPRequestHandler):
         self.end_headers()
         
     def do_POST(self):
+        #setHeaders("text/html")
         self.send_response(200)
         self.send_header("Content-Type", "text/html")
         self.end_headers()
-        self.wfile.write(bytes("Send your POST response here!", "utf-8"))
-        
+        message = "\nCurrent server date and time is " + time.strftime("%Y-%m-%dT%H:%M:%S") + "\n"
+        message += "This server has " + str(psutil.cpu_count()) + " logical CPUs\n"
+        message += "Server CPU usage is at " + str(psutil.cpu_percent()) + "%\n"
+        usedMem = psutil.virtual_memory().used / 2**30
+        totalMem = psutil.virtual_memory().total / 2**30
+        message += "Server RAM usage is at " + "{:.2f}".format(usedMem) + "GB\n"
+        message += "Server total RAM is " + "{:.2f}".format(totalMem) + "GB\n"
+        self.wfile.write(bytes(message, "utf-8"))
         
     def do_GET(self):
     
