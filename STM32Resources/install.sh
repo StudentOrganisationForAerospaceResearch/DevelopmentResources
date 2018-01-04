@@ -6,7 +6,19 @@ if [[ $UID != 0 ]]; then
     exit 1
 fi
 
-apt-get -y install build-essential git libsane:i386 ia32-libs-multiarch autoconf libusb-1.0-0-dev lib32ncurses5 libncurses5:i386 software-properties-common pkg-config cmake
+apt-get update
+apt-get -y install \
+    build-essential \
+    git \
+    libsane:i386 \
+    ia32-libs-multiarch \
+    autoconf \
+    libusb-1.0-0-dev \
+    lib32ncurses5 \
+    libncurses5:i386 \
+    software-properties-common \
+    pkg-config \
+    cmake
 
 # Install STLink
 if ! type "st-flash" > /dev/null; then
