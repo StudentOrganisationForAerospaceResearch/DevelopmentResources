@@ -52,13 +52,14 @@
 #include "cmsis_os.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "BlinkBlue.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 osThreadId defaultTaskHandle;
 
 /* USER CODE BEGIN PV */
+osThreadId blinkBlueHandle;
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE END PV */
@@ -121,11 +122,12 @@ int main(void)
 
     /* Create the thread(s) */
     /* definition and creation of defaultTask */
-    osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-    defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+    // osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+    // defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
     /* USER CODE BEGIN RTOS_THREADS */
-    /* add threads, ... */
+    osThreadDef(blinkBlueTask, blinkBlueLedTask, osPriorityNormal, 1, configMINIMAL_STACK_SIZE);
+    blinkBlueHandle = osThreadCreate(osThread(blinkBlueTask), NULL);
     /* USER CODE END RTOS_THREADS */
 
     /* USER CODE BEGIN RTOS_QUEUES */
@@ -168,35 +170,24 @@ void SystemClock_Config(void)
 
     /**Initializes the CPU, AHB and APB busses clocks
     */
-    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-    RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-    RCC_OscInitStruct.HSICalibrationValue = 16;
+    RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+    RCC_OscInitStruct.HSEState = RCC_HSE_ON;
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+    RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
     RCC_OscInitStruct.PLL.PLLM = 8;
-    RCC_OscInitStruct.PLL.PLLN = 192;
+    RCC_OscInitStruct.PLL.PLLN = 400;
     RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV4;
-    RCC_OscInitStruct.PLL.PLLQ = 8;
-
-    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-    {
-        _Error_Handler(__FILE__, __LINE__);
-    }
+    RCC_OscInitStruct.PLL.PLLQ = 7;
+    HAL_RCC_OscConfig(&RCC_OscInitStruct);
 
     /**Initializes the CPU, AHB and APB busses clocks
     */
-    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
-                                  | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
+    RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
     RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
-    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
-
-    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
-    {
-        _Error_Handler(__FILE__, __LINE__);
-    }
-
+    RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+    RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+    HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2);
     /**Configure the Systick interrupt time
     */
     HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq() / 1000);
@@ -382,29 +373,6 @@ void StartDefaultTask(void const* argument)
     }
 
     /* USER CODE END 5 */
-}
-
-/**
-  * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM1 interrupt took place, inside
-  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
-  * a global variable "uwTick" used as application time base.
-  * @param  htim : TIM handle
-  * @retval None
-  */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
-{
-    /* USER CODE BEGIN Callback 0 */
-
-    /* USER CODE END Callback 0 */
-    if (htim->Instance == TIM1)
-    {
-        HAL_IncTick();
-    }
-
-    /* USER CODE BEGIN Callback 1 */
-
-    /* USER CODE END Callback 1 */
 }
 
 /**
