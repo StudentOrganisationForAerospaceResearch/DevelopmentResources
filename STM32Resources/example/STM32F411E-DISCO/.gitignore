@@ -37,6 +37,7 @@ build/
 .mxproject
 .dep/
 *.ioc
+*.tmp
 
 # Other
 Makefile
