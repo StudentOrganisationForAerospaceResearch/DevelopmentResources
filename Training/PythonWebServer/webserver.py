@@ -2,6 +2,7 @@
 
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 import sys
+import psutil
 
 class SoarWebServer(SimpleHTTPRequestHandler):
 

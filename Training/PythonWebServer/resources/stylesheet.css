@@ -1,5 +1,27 @@
 h1 {
 	font-family: sans-serif;
 	text-align: center;
-	color: red;
+	color: black;
+}
+h2 {
+    font-family: sans-serif;
+    text-align: center;
+    color: black;
+    border:none;
+    background-color:#000080;
+    padding:10px;
+    overflow:hidden;
+}
+body {
+    background: linear-gradient(white, blue);
+}
+.button {
+    background-color: #000080;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
