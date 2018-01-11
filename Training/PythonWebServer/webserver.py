@@ -3,11 +3,17 @@
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 import sys
 import psutil
+from time import strftime,gmtime
+
 
 class SoarWebServer(SimpleHTTPRequestHandler):
 
     def do_POST(self):
-        self.wfile.write("Send your POST response here!")
+        time=strftime("%Y-%m-%d %H:%M%:S", gmtime())
+        cpus=psutil.cpu_percent(percpu=True)
+        ncpus="number of cpus: "+str(len(cpus))
+        usage="\n".join([str(a)+" %" for a in cpus])
+        self.wfile.write(time+"\n"+cpus+"\n"+usage)
 
 
 def main():
