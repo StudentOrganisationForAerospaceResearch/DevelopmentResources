@@ -1,0 +1,79 @@
+= *Setting up and Using an STM32 Build Environment on Linux*
+A guide for setting up a linux system to build projects for STM32
+
+
+This guide assumes you are starting with a Windows 64 bit system and intend to use a virtual machine in Oracle Virtualbox. I installed Linux Mint 18.3 If you already have a linux system set up, are using a Mac, or want to set it up a diffeent way figure out what parts of this guide you have already completed yourself and rejoin at a later step.
+
+== Install Virtualbox
+Download https://www.virtualbox.org/wiki/Downloads[Oracle Virtual Box]
+The latest version at writting was 5.2.4. Also download the VirtualBox Extension Pack from the same page.
+Install both.
+
+==== Setup a Virtual Machine
+Create a new virtual machine in Virtualbox.
+
+image::images/1.png[]
+
+There isn't an option or Linux Mint OS so choose Ubuntu.
+You'll need 20-30+GB of hard disk space to hold the OS, tools and your projects.
+Run through the creation of your VM and hard disk configuration
+
+
+
+==== Install Linux Mint
+Download the https://linuxmint.com/edition.php?id=246[Linux Mint Cinnamon 64 bit ISO]
+When Virtualbox asks to select a start up disk, navigate to the ISO which will boot into the installer.
+Click the disk icon to start the installation and run through it.
+
+image::images/2.png[]
+
+image::images/3.png[]
+
+==== Configure Virtual Machine
+You'll need to enable a fe
+w features in Virtualbox to allow everything to work.
+One is the Guest Additions Package. At the top of your VM window select Devices->Insert Guest Additions CD Image. Run the installer.
+
+You should now be able to use shared clipboard  between the host and guest operating systems once you enable these features in the Devices menu.
+
+Shut down your VM. Go into settings and enable 3D acceleration for the display (if available) and the USB controller. When you plug in a USB device, you can capture it in the VM by clicking the USB icon in the bottom right of the window and selecting your device.
+
+==== Install Git and other Packages
+==== Git
+----
+ sudo apt-get install git-all
+----
+
+==== STLINK, CubeMXMakefile
+Clone the Development Resources repo on the SOAR Git. Open the terminal and navigate
+to where you want to clone to.
+----
+git clone https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentResources.git
+----
+Find install.sh in DevelopmentREsources/STM32Resources.
+Change the permissions for the file to allow executing as a program. See the properties menu.
+Run install.sh from the terminal
+
+===== SW4STM32
+System Workbench for STM32 is an Eclipse based IDE for editing code as well as
+flashing and debugging on hardware. http://www.openstm32.org/System%2BWorkbench%2Bfor%2BSTM32[Make an account and download the installer and run it]
+
+===== STMCubeMX
+CubeMX is a tool that generates a project for you with all the configuration files and functions
+to set up the hardware. Using CubeNX makes it easy to develop without knowing about every feature of the STM32
+Download the application http://www.st.com/en/development-tools/stm32cubemx.html[here] using the link at the buttom of the page.
+
+When you run the installer, you may need to http://tipsonubuntu.com/2016/07/31/install-oracle-java-8-9-ubuntu-16-04-linux-mint-18/[install java]
+
+
+At this point you have the tools to develop with your STM32 hardware. There will be another guide on how to import the ST example projects
+and compile and flash your own project.
+
+==== Extra Tip
+I recommend setting up a shared folder between Windows and Linux.
+You can set this up in your Virtualox settings. After you mount the drive you need to run
+the following command to give Linux permissions to access the files.
+----
+sudo adduser xxxxx vboxsf
+----
+where xxxxx is your Linux user name
