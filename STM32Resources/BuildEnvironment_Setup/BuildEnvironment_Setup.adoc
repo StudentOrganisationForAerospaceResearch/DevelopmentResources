@@ -1,6 +1,3 @@
-ifdef::env-github[]
-:imagesdir: https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentResources/tree/garnettanner/stm32-example/STM32Resources/BuildEnvironment_Setup/images
-endif::[]
 
 
 = *Setting up and Using an STM32 Build Environment on Linux*
@@ -17,7 +14,7 @@ Install both.
 ==== Setup a Virtual Machine
 Create a new virtual machine in Virtualbox.
 
-image::1.png[]
+image::https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentResources/blob/garnettanner/stm32-example/STM32Resources/BuildEnvironment_Setup/images/1.PNG[]
 
 There isn't an option or Linux Mint OS so choose Ubuntu.
 You'll need 20-30+GB of hard disk space to hold the OS, tools and your projects.
@@ -30,9 +27,9 @@ Download the https://linuxmint.com/edition.php?id=246[Linux Mint Cinnamon 64 bit
 When Virtualbox asks to select a start up disk, navigate to the ISO which will boot into the installer.
 Click the disk icon to start the installation and run through it.
 
-image::2.png[]
+image::https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentResources/blob/garnettanner/stm32-example/STM32Resources/BuildEnvironment_Setup/images/2.PNG[]
 
-image::3.png[]
+image::https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentResources/blob/garnettanner/stm32-example/STM32Resources/BuildEnvironment_Setup/images/3.PNG[]
 
 ==== Configure Virtual Machine
 You'll need to enable a fe
