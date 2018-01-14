@@ -1,8 +1,8 @@
-= Setting up a Linux Virtual Machine
+﻿= Setting up a Linux Virtual Machine
 
 This guide assumes the host operating system is 64 bit Windows
 This guide was written for Linux Mint 18.3.
-The steps include installing the required software on the host machine and settng up Linux Mint as a virtual machine (VM)
+The steps include installing the required software on the host machine and setting up Linux Mint as a virtual machine (VM)
 
 == 1. Install Virtualbox
 Download https://www.virtualbox.org/wiki/Downloads[Oracle Virtual Box]
@@ -16,13 +16,13 @@ Create a new virtual machine in Virtualbox using the _New_ icon.
 
 image::https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentResources/blob/garnettanner/stm32-example/STM32Resources/BuildEnvironment_Setup/images/1.PNG[]
 
-Choose Linux as the type and Ubuntu (64 bit) as the OS version as Mint is based on Ubuntu
+Choose Linux as the type and Ubuntu (64 bit) as the OS version as Mint is based on Ubuntu.
 Mint reccomends 20 GB of hard disk and 1 GB of RAM for a bare minimal installation. Give yourself extra RAM and space for project files and application packages. 
 You can change these settings later if required. 
 Use the default options if unsure
 
 === Install Linux Mint
-Download the https://linuxmint.com/edition.php?id=246[Linux Mint Cinnamon 64 bit ISO]
+Download the https://linuxmint.com/edition.php?id=246[Linux Mint Cinnamon 64 bit ISO].
 When Virtualbox asks to select a start up disk, navigate to the ISO which will boot into the installer.
 Click the disk icon to start the installation and run through it. 
 Select the default options if unsure of anything.
@@ -33,7 +33,7 @@ image::https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentRes
 image::https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentResources/blob/garnettanner/stm32-example/STM32Resources/BuildEnvironment_Setup/images/3.PNG[]
 
 === Configure Virtual Machine
-You'll need to enable a few features in Virtualbox to give it acces to your host system hardware.
+You'll need to enable a few features in Virtualbox to give it access to your host system hardware.
 One is the Guest Additions Package. 
 At the top of your VM window select Devices->Insert Guest Additions CD Image. 
 Run the installer.
