@@ -1,0 +1,57 @@
+= Setting up and Using an STM32 Build Environment on Linux
+
+This guide assumes the host operating system is 64 bit Windows
+This guide was written for Linux Mint 18.3.
+The steps include installing the required software on the host machine and settng up Linux Mint as a virtual machine (VM)
+
+== 1. Install Virtualbox
+Download https://www.virtualbox.org/wiki/Downloads[Oracle Virtual Box]
+The latest version at writting was 5.2.4. 
+Download the VirtualBox Extension Pack from the same page.
+Install both.
+
+== 2. Setup a Virtual Machine
+Create a new virtual machine in Virtualbox using the _New_ icon.
+
+
+image::https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentResources/blob/garnettanner/stm32-example/STM32Resources/BuildEnvironment_Setup/images/1.PNG[]
+
+Choose Linux as the type and Ubuntu (64 bit) as the OS version as Mint is based on Ubuntu
+Mint reccomends 20 GB of hard disk and 1 GB of RAM for a bare minimal installation. Give yourself extra RAM and space for project files and application packages. 
+You can change these settings later if required. 
+Use the default options if unsure
+
+=== Install Linux Mint
+Download the https://linuxmint.com/edition.php?id=246[Linux Mint Cinnamon 64 bit ISO]
+When Virtualbox asks to select a start up disk, navigate to the ISO which will boot into the installer.
+Click the disk icon to start the installation and run through it. 
+Select the default options if unsure of anything.
+When the installer finishes you can eject the install disk and start Mint.
+
+image::https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentResources/blob/garnettanner/stm32-example/STM32Resources/BuildEnvironment_Setup/images/2.PNG[]
+
+image::https://github.com/StudentOrganisationForAerospaceResearch/DevelopmentResources/blob/garnettanner/stm32-example/STM32Resources/BuildEnvironment_Setup/images/3.PNG[]
+
+=== Configure Virtual Machine
+You'll need to enable a few features in Virtualbox to give it acces to your host system hardware.
+One is the Guest Additions Package. 
+At the top of your VM window select Devices->Insert Guest Additions CD Image. 
+Run the installer.
+
+You should now be able to use shared clipboard between the host and guest operating systems once you enable these features in the Devices menu.
+
+Note: Drag and Drop does not work between a Windows Host and Linux VM.
+
+Shut down your VM. Go to Virtualbox Settings->Display->Enable 3D acceleration (if available) and USB-> Enable USB controller. 
+When you plug in a USB device, you can capture it in the VM by clicking on the USB icon in the bottom right of the Virtualbox window and selecting your device.
+You can also add a filter to auto capture certain devices when they are plugged in.
+
+
+==== Extra Tip
+Setup a shared folder between Windows and Linux in the Virtualbox Settings->Shared Folders -> Add new Shared Folder.
+Check _Automount_ and _Make Perminant_ After you mount the drive you need to run
+the following command to give Linux permissions to access the files.
+----
+sudo adduser xxxxx vboxsf
+----
+where xxxxx is your Linux user name
