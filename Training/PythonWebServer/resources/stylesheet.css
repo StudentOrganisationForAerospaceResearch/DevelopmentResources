@@ -3,3 +3,139 @@ h1 {
 	text-align: center;
 	color: red;
 }
+p{
+	display: inline;
+}
+html{
+	height: 100%;
+}
+body{
+	height: 100%;
+	margin: 0;
+	background-repeat: no-repeat;
+	background: linear-gradient(grey, white);
+	background-attachment: fixed;
+}
+.wrapper{
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	width: 80%;
+	text-align: center;
+}
+.button{
+	box-shadow: 7px 7px grey;
+	border-radius: 5px;
+
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 3cm;
+	width: 330px;
+	height: 70px;
+
+	font-family: sans-serif;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	
+	background-color: #F5D04C;
+    border: none;
+    padding: 10px 75px;
+    font-size: 40px;
+    display: block;
+}
+button::-moz-focus-inner {
+  border: 0;
+}
+@media screen and (max-width: 1400px){
+.display{
+	box-shadow: 7px 7px grey;
+	border-radius: 5px;
+	display:inline-block;
+	letter-spacing: -2px;
+
+	margin-top: 3cm;
+	width: 250px;
+	height: 120px;
+
+	font-family: sans-serif;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	background-color: #8D021F;
+    border: none;
+    padding: 35px 10px;
+   	margin-left: 20px;
+    margin-right: 20px;
+	font-size: 25px;
+	}
+}
+@media screen and (min-width: 1400px) and (max-width: 1500px){
+	.display{
+	box-shadow: 7px 7px grey;
+	border-radius: 5px;
+	display:inline-block;
+	letter-spacing: -2px;
+
+	margin-top: 3cm;
+	width: 250px;
+	height: 120px;
+
+	font-family: sans-serif;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	background-color: #8D021F;
+    border: none;
+    padding: 35px 10px;
+   	margin-left: 30px;
+    margin-right: 30px;
+	font-size: 25px;
+}
+}
+@media screen and (min-width: 1500px) and (max-width: 1600px){
+	.display{
+	box-shadow: 7px 7px grey;
+	border-radius: 5px;
+	display:inline-block;
+	letter-spacing: -2px;
+
+	margin-top: 3cm;
+	width: 250px;
+	height: 120px;
+
+	font-family: sans-serif;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	background-color: #8D021F;
+    border: none;
+    padding: 35px 10px;
+   	margin-left: 40px;
+    margin-right: 40px;
+	font-size: 25px;
+}
+}
+@media screen and (min-width: 1600px) {
+	.display{
+	box-shadow: 7px 7px grey;
+	border-radius: 5px;
+	display:inline-block;
+	letter-spacing: -2px;
+
+	margin-top: 3cm;
+	width: 250px;
+	height: 120px;
+
+	font-family: sans-serif;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	background-color: #8D021F;
+    border: none;
+    padding: 35px 10px;
+   	margin-left: 50px;
+    margin-right: 50px;
+	font-size: 25px;
+}
+}
