@@ -33,7 +33,7 @@ build/
 *.dSYM/
 
 # CubeMX
-.tmp
+*.tmp
 STM32L152-Discovery.elf.launch
 .mxproject
 .dep/

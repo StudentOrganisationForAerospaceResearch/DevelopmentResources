@@ -1,3 +1,8 @@
+/**
+  ******************************************************************************
+  * File Name          : freertos.c
+  * Description        : Code for freertos applications
+  ******************************************************************************
   * This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
   * USER CODE END. Other portions of this file, whether 
@@ -38,3 +43,33 @@
   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
+  ******************************************************************************
+  */
+
+/* Includes ------------------------------------------------------------------*/
+#include "FreeRTOS.h"
+#include "task.h"
+
+/* USER CODE BEGIN Includes */     
+
+/* USER CODE END Includes */
+
+/* Variables -----------------------------------------------------------------*/
+
+/* USER CODE BEGIN Variables */
+
+/* USER CODE END Variables */
+
+/* Function prototypes -------------------------------------------------------*/
+
+/* USER CODE BEGIN FunctionPrototypes */
+
+/* USER CODE END FunctionPrototypes */
+
+/* Hook prototypes */
+
+/* USER CODE BEGIN Application */
+     
+/* USER CODE END Application */
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
