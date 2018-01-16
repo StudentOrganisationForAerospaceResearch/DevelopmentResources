@@ -37,7 +37,6 @@ class SoarWebServer(SimpleHTTPRequestHandler):
 
 def main():
     port = int(sys.argv[1]) # Error check this!
-    print(datetime.now(tz=pytz.timezone('America/Edmonton')).strftime('%H:%M:%S'))
 
     server_address = ("", port)
     httpd = HTTPServer(server_address, SoarWebServer)
