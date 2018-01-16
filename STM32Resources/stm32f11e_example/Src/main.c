@@ -60,6 +60,7 @@ osThreadId defaultTaskHandle;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+osThreadId blinkLightsTaskHandle;
 
 /* USER CODE END PV */
 
@@ -70,6 +71,7 @@ void StartDefaultTask(void const* argument);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
+void blinkLightsTask(void const* argument);
 
 /* USER CODE END PFP */
 
@@ -125,7 +127,8 @@ int main(void)
     defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
     /* USER CODE BEGIN RTOS_THREADS */
-    /* add threads, ... */
+    osThreadDef(blinkLightsThread, blinkLightsTask, osPriorityNormal, 1, configMINIMAL_STACK_SIZE);
+    blinkLightsTaskHandle = osThreadCreate(osThread(blinkLightsThread), NULL);
     /* USER CODE END RTOS_THREADS */
 
     /* USER CODE BEGIN RTOS_QUEUES */
@@ -367,6 +370,39 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void blinkLightsTask(void const* argument)
+{
+    uint32_t prevWakeTime = osKernelSysTick();
+    uint16_t counter = 0;
+
+    for (;;)
+    {
+        osDelayUntil(&prevWakeTime, 250);
+
+        switch (counter)
+        {
+            case 0:
+                HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+                counter = 1;
+                break;
+
+            case 1:
+                HAL_GPIO_TogglePin(LD4_GPIO_Port, LD4_Pin);
+                counter = 2;
+                break;
+
+            case 2:
+                HAL_GPIO_TogglePin(LD5_GPIO_Port, LD5_Pin);
+                counter = 3;
+                break;
+
+            case 3:
+                counter = 0;
+                HAL_GPIO_TogglePin(LD6_GPIO_Port, LD6_Pin);
+                break;
+        }
+    }
+}
 
 /* USER CODE END 4 */
 
