@@ -66,7 +66,7 @@ For example, EWARM is for the IAR Embedded Workbench IDE and CubeMX2Makefile wil
 == Flashing
 Flashing is how the `.bin` that was made is put onto the board. This is how the processor on the board is able to carry out the instructions that were generated from the code.
 
-To flash the board use `st-flash write /path/to/project/build/<project>.bin 0x8000000`. Some difficulties may arise in this stage for Fedora, like the system giving `bash: st-flash: command not found` error.
+To flash the board use `st-flash write /path/to/project/build/<project>.bin 0x8000000`. Some difficulties may arise in this stage for Fedora, like the system giving `bash: st-flash: command not found` error
 * Make sure the path to stlink is added to bashrc
 ** Below “export PATH=$PATH:/opt/gcc4mbed/gcc-arm-none-eabi/bin” add `export PATH=$PATH:/opt/stlink/build`
 * Add a copy of bashrc into the root directory
