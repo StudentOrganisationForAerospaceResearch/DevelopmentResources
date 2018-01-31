@@ -66,17 +66,17 @@ For example, EWARM is for the IAR Embedded Workbench IDE and CubeMX2Makefile wil
 == Flashing
 Flashing is how the `.bin` that was made is put onto the board. This is how the processor on the board is able to carry out the instructions that were generated from the code.
 
-To flash the board use `st-flash write /path/to/project/build/<project>.bin 0x8000000`. Some difficulties may arise in this stage for Fedora, like the system giving `bash: st-flash: command not found` error. To solve this issue, try: +
-1. Make sure the path to stlink is added to bashrc. + 
-- Below “export PATH=$PATH:/opt/gcc4mbed/gcc-arm-none-eabi/bin” add `export PATH=$PATH:/opt/stlink/build`. +
-2. Add a copy of bashrc into the root directory. + 
-- Run `cp ~/.bashrc /root/`. +
-3. Install cmake. +
-- Run `sudo dnf install cmake`. +
-4. Install libusb library. +
-- Run `yum provides */libusb.h` which would display libusb libraries. + 
-- Run `sudo dnf install libusbx-devel-1.0.21-2.fc26.x86_64`. This is a 64 bit compliant package. + 
-- Run `sudo dnf install libusbx-devel-1.0.21-2.fc26.i686`. This is a 32 bit compliant package. + 
+To flash the board use `st-flash write /path/to/project/build/<project>.bin 0x8000000`. Some difficulties may arise in this stage for Fedora, like the system giving `bash: st-flash: command not found` error. To solve this issue, try: ++
+1. Make sure the path to stlink is added to bashrc. ++
+- Below “export PATH=$PATH:/opt/gcc4mbed/gcc-arm-none-eabi/bin” add `export PATH=$PATH:/opt/stlink/build`. ++
+2. Add a copy of bashrc into the root directory. ++
+- Run `cp ~/.bashrc /root/`. ++
+3. Install cmake. ++
+- Run `sudo dnf install cmake`. ++
+4. Install libusb library. ++
+- Run `yum provides */libusb.h` which would display libusb libraries. ++
+- Run `sudo dnf install libusbx-devel-1.0.21-2.fc26.x86_64`. This is a 64 bit compliant package. ++ 
+- Run `sudo dnf install libusbx-devel-1.0.21-2.fc26.i686`. This is a 32 bit compliant package. ++
 5. Run `(cd /opt/stlink/build && cmake -DCMAKE_BUILD_TYPE=Debug .. && make -j4)`. +
 
 If a board isn't connected, and it ran successfully, the output should be: 
