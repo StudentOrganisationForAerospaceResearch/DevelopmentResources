@@ -5,35 +5,28 @@ import sys
 import psutil
 from datetime import datetime
 import pytz
+import json
 
 class SoarWebServer(SimpleHTTPRequestHandler):
 
     def do_POST(self):
         #Send your POST response here!
-        s0 = str(datetime.now(tz=pytz.timezone('America/Edmonton')).strftime('%H:%M:%S'));
-        s1 = str(psutil.cpu_count());
-        s2 = str(psutil.cpu_percent(interval=1));
-       	s3 = str(round(psutil.virtual_memory().total/(2**30), 2));
-        s4 = str(round(psutil.virtual_memory().used/(2**30), 2));
 
-        self.wfile.write(bytes(s0, "utf-8"));
-        self.wfile.write(bytes(s1, "utf-8"));
-        self.wfile.write(bytes(s2, "utf-8"));
-        if(len(s2)==3):
-        	self.wfile.write(bytes(" ", "utf-8"));
-        if(len(s2)==2):
-        	self.wfile.write(bytes("  ", "utf-8"));
-        self.wfile.write(bytes(s3, "utf-8"));
-        if(len(s4)==3):
-        	self.wfile.write(bytes("  ", "utf-8"));
-        if(len(s3)==4):
-        	self.wfile.write(bytes(" ", "utf-8"));
-        self.wfile.write(bytes(s4, "utf-8"));
-        if(len(s4)==3):
-        	self.wfile.write(bytes("  ", "utf-8"));
-        if(len(s4)==4):
-        	self.wfile.write(bytes(" ", "utf-8"));
+        time = datetime.now(tz=pytz.timezone('America/Edmonton')).strftime('%H:%M:%S');
+        cpu_count = str(psutil.cpu_count()).ljust(2);
+        cpu_percent = str(psutil.cpu_percent(interval=1)).ljust(5);
+       	virtual_memory_total= str(round(psutil.virtual_memory().total/(2**30), 2)).ljust(5);
+        virtual_memory_used = str(round(psutil.virtual_memory().used/(2**30), 2)).ljust(4);
 
+        pythonData = {  
+	        "Time": time,
+	        "Total CPUs": cpu_count,
+	        "CPU Usage": cpu_percent,
+	        "Total RAM": virtual_memory_total,
+	        "Used RAM": virtual_memory_used
+        }
+        json_string = json.dumps(pythonData)
+        self.wfile.write(bytes(json_string, "utf-8"));
 
 def main():
     port = int(sys.argv[1]) # Error check this!
