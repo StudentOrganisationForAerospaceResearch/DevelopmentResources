@@ -1,0 +1,66 @@
+= Compiling and Flashing STM Board on Fedora
+
+. Go to UCSolarCarTeam repo > Recruit Resources, and clone.
+
+. Navigate to STM32F4Discovery-Resources and run the auto installer using `sudo ./install.sh`. 
+This should download STLink, gcc4mbed, and CubeMX2Makefile and add them all to the path.
+
+. http://www.st.com/en/development-tools/stm32cubemx.html[Go to the download page of the official ST website by clicking this link^].
+
+. Scroll to the bottom of the page to the *GET SOFTWARE* section and click *Get Software*.
+
+. Follow the instructions and download CubeMX.
+
+. Extract files from `.zip` file using a preferred method.
+For example, use `unzip file.zip`.
+
+. Navigate to the directory the files were extracted to.
+
+. Run *SetupSTM32CubeMX-VERSION.linux* using `./SetupSTM32CubeMX-{var}.linux` where  {var} is the version of CubeMx that is being installed.
+
+. Follow the instructions in the Installation Wizard.
+
+
+== Generating Code with CubeMX
+
+. Open CubeMX. The default path is `~/STM32CubeMX`.
+
+. Select New Project.
+
+. Click on the Board Selector Tab and scroll to STM32F4DISCOVERY then click OK.
+
+. Go to Project > Settings.
+
+. Name the project, set the project location, and change the Toolchain/IDE to SW4STM32. 
+*If this isn't done, CubeMX2Makefile won't work!* 
+CubeMX2Makefile looks for an SW4STM32 project which was created by CubeMX.
+If the Toolchain/IDE is not set to SW4STM32, it will be in the format of a different IDE, not CubeMX.
+For example, EWARM is for the IAR Embedded Workbench IDE and CubeMX2Makefile will not know what to do with that format.
+
+. Make note of the Toolchain Folder Location, which will also be the project folder location.
+
+. Click OK and download any dependencies that are needed, then click OK again.
+
+. Make pin assignments then go to Project > Generate Code, and then save project.
+
+
+== Generating a Makefile and Compiling
+
+. Create the makefile using  `CubeMX2Makefile /path/to/project/folder`.
+
+. Go to the directory that the Makefile was made then compile using `make`.
+* Need to double check that the right compiler is being used. In our case, this would be `arm-none-eabi-g++`.
+** If your system has different type of arm compilers installed, they should be removed using `sudo dnf remove compilername` to prevent ambiguity 
+
+. Navigate to the build directory and there should be a `<project>.bin` file. Where `<project>` is the project name. 
+
+== Flashing
+Flashing is how the `.bin` that was made is put onto the board. This is how the processor on the board is able to carry out the instructions that were generated from the code.
+
+To flash the board use `st-flash write /path/to/project/build/<project>.bin 0x8000000`.
+
+If a board isn't connected, and it ran successfully, the output should be: 
+----
+st-flash 1.3.0-dev
+DATE/TIME WARN /opt/stlink/src/usb.c: Couldn't find any ST-Link/V2 devices
+----
