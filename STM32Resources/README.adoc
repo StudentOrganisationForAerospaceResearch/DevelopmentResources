@@ -1,12 +1,8 @@
-﻿= Compiling and Flashing STM Board
+= Compiling and Flashing STM Board on Fedora
 
-NOTE: This has only been tested on Linux Mint and Fedora 26, but is expected to work on other Debian based distros as well.
+. Go to UCSolarCarTeam repo > Recruit Resources, and clone.
 
-== Setup
-
-. Go to StudentOrganisationForAerospaceResearch repo > DevelopmentResources, and clone.
-
-. Navigate to STM32Resources and run the auto installer using `sudo ./install.sh`. 
+. Navigate to STM32F4Discovery-Resources and run the auto installer using `sudo ./install.sh`. 
 This should download STLink, gcc4mbed, and CubeMX2Makefile and add them all to the path.
 
 . http://www.st.com/en/development-tools/stm32cubemx.html[Go to the download page of the official ST website by clicking this link^].
@@ -20,9 +16,7 @@ For example, use `unzip file.zip`.
 
 . Navigate to the directory the files were extracted to.
 
-. Run *SetupSTM32CubeMX-VERSION.linux* using `./SetupSTM32CubeMX-{var}.linux` where {var} is the version of CubeMx that is being installed.
-* Since STM32CubeMX is a 32-bit application, some versions of Linux 64-bit distributions require to install 32-bit compliant packages such as ia32-libs. If using Fedora, it is very likely that 32-bit packages are missing. 
-** Run `su -c 'yum -y install --skip-broken glibc.i686 arts.i686 audiofile.i686 bzip2-libs.i686 cairo.i686 cyrus-sasl-lib.i686 dbus-libs.i686 directfb.i686 esound-libs.i686 fltk.i686 freeglut.i686 gtk2.i686 hal-libs.i686 imlib.i686 lcms-libs.i686 lesstif.i686 libacl.i686 libao.i686 libattr.i686 libcap.i686 libdrm.i686 libexif.i686 libgnomecanvas.i686 libICE.i686 libieee1284.i686 libsigc++20.i686 libSM.i686 libtool-ltdl.i686 libusb.i686 libwmf.i686 libwmf-lite.i686 libX11.i686 libXau.i686 libXaw.i686 libXcomposite.i686 libXdamage.i686 libXdmcp.i686 libXext.i686 libXfixes.i686 libxkbfile.i686 libxml2.i686 libXmu.i686 libXp.i686 libXpm.i686 libXScrnSaver.i686 libxslt.i686 libXt.i686 libXtst.i686 libXv.i686 libXxf86vm.i686 lzo.i686 mesa-libGL.i686 mesa-libGLU.i686 nas-libs.i686 nss_ldap.i686 cdk.i686 openldap.i686 pam.i686 popt.i686 pulseaudio-libs.i686 sane-backends-libs-gphoto2.i686 sane-backends-libs.i686 SDL.i686 svgalib.i686 unixODBC.i686 zlib.i686 compat-expat1.i686 compat-libstdc++-33.i686 openal-soft.i686 alsa-oss-libs.i686 redhat-lsb.i686 alsa-plugins-pulseaudio.i686 alsa-plugins-oss.i686 alsa-lib.i686 nspluginwrapper.i686 libXv.i686 libXScrnSaver.i686 qt.i686 qt-x11.i686 pulseaudio-libs.i686 pulseaudio-libs-glib2.i686 alsa-plugins-pulseaudio.i686'`
+. Run *SetupSTM32CubeMX-VERSION.linux* using `./SetupSTM32CubeMX-{var}.linux` where  {var} is the version of CubeMx that is being installed.
 
 . Follow the instructions in the Installation Wizard.
 
@@ -54,30 +48,16 @@ For example, EWARM is for the IAR Embedded Workbench IDE and CubeMX2Makefile wil
 
 . Create the makefile using  `CubeMX2Makefile /path/to/project/folder`.
 
-. Go to the directory that the Makefile was made then compile using `make`. Many anomalies occur during this stage in Fedora:
+. Go to the directory that the Makefile was made then compile using `make`.
 * Need to double check that the right compiler is being used. In our case, this would be `arm-none-eabi-g++`.
-** If your system has different type of arm compilers installed, they should be removed using `sudo dnf remove compilername` to prevent ambiguity  
-* Path to the compiler should be added as an environment variable
-** Open system’s bashrc file using the editor of your choice: `vim ~/.bashrc`
-** Below “# export SYSTEMD_PAGER=” add `export PATH=$PATH:/opt/gcc4mbed/gcc-arm-none-eabi/bin` 
+** If your system has different type of arm compilers installed, they should be removed using `sudo dnf remove compilername` to prevent ambiguity 
 
 . Navigate to the build directory and there should be a `<project>.bin` file. Where `<project>` is the project name. 
 
 == Flashing
 Flashing is how the `.bin` that was made is put onto the board. This is how the processor on the board is able to carry out the instructions that were generated from the code.
 
-To flash the board use `st-flash write /path/to/project/build/<project>.bin 0x8000000`. Some difficulties may arise in this stage for Fedora, like the system giving `bash: st-flash: command not found` error. To solve this issue, try: +
-1. Make sure the path to stlink is added to bashrc. +
-- Below “export PATH=$PATH:/opt/gcc4mbed/gcc-arm-none-eabi/bin” add `export PATH=$PATH:/opt/stlink/build`. +
-2. Add a copy of bashrc into the root directory. +
-- Run `cp ~/.bashrc /root/`. +
-3. Install cmake. +
-- Run `sudo dnf install cmake`. +
-4. Install libusb library. +
-- Run `yum provides */libusb.h` which would display libusb libraries. +
-- Run `sudo dnf install libusbx-devel-1.0.21-2.fc26.x86_64`. This is a 64 bit compliant package. +
-- Run `sudo dnf install libusbx-devel-1.0.21-2.fc26.i686`. This is a 32 bit compliant package. +
-5. Run `(cd /opt/stlink/build && cmake -DCMAKE_BUILD_TYPE=Debug .. && make -j4)`. +
+To flash the board use `st-flash write /path/to/project/build/<project>.bin 0x8000000`.
 
 If a board isn't connected, and it ran successfully, the output should be: 
 ----
