@@ -1,8 +1,8 @@
-= Compiling and Flashing STM Board on Fedora
+= Compiling and Flashing STM Board on Linux 
 
-. Go to UCSolarCarTeam repo > Recruit Resources, and clone.
+. Go to StudentOrganisationForAerospaceResearch repo > DevelopmentResources, and clone.
 
-. Navigate to STM32F4Discovery-Resources and run the auto installer using `sudo ./install.sh`. 
+. Navigate to STM32Resources and run the auto installer using `sudo ./install.sh`. 
 This should download STLink, gcc4mbed, and CubeMX2Makefile and add them all to the path.
 
 . http://www.st.com/en/development-tools/stm32cubemx.html[Go to the download page of the official ST website by clicking this link^].
