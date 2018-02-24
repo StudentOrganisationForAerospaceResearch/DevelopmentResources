@@ -1,5 +1,68 @@
-h1 {
-	font-family: sans-serif;
-	text-align: center;
-	color: red;
+﻿html {
+    height: 100%;
+}
+
+body {
+    font-family: Calibri;
+    background: linear-gradient(#2d2d30, #000000);
+    background-color: black;
+    background-repeat: no-repeat;
+    color: #fff;
+}
+
+p {
+    text-align: center;
+    width: 45%;
+    margin: 0 auto 15px auto;
+    font-size: 1.35em;
+    font-weight: 300;
+}
+
+.button {
+    background: linear-gradient(#3d9de9, #0876cd);
+    border: none;
+    color: white;
+    padding: 17px 38px;
+    margin: 25px 0 75px 0;
+    text-align: center;
+    font-size: 1.25em;
+    font-weight: 500;
+    -webkit-transition-duration: 0.1s;
+    transition-duration: 0.1s;
+    cursor: pointer;
+}
+
+.Update:hover {
+    background: linear-gradient(#78b4e4, #0876cd);
+    color: white;
+}
+
+.Time h2 {
+    text-align: center;
+    font-size: 2.0em;
+    font-weight: 400;
+}
+
+.Time {
+    margin: auto auto 100px 0;
+}
+
+.CPU h2 {
+    text-align: center;
+    font-size: 2.0em;
+    font-weight: 400;
+}
+
+.CPU {
+    margin: auto auto 100px 0;
+}
+
+.RAM h2{
+    text-align: center;
+    font-size: 2.0em;
+    font-weight: 400;
+}
+
+.RAM {
+    margin: auto auto 100px 0;
 }

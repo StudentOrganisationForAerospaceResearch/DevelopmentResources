@@ -1,12 +1,28 @@
 #!/usr/bin/env python
 
-from http.server import SimpleHTTPRequestHandler, HTTPServer
 import sys
+from http.server import SimpleHTTPRequestHandler, HTTPServer
+import psutil
+import datetime
+import json
 
 class SoarWebServer(SimpleHTTPRequestHandler):
 
     def do_POST(self):
-        self.wfile.write("Send your POST response here!")
+        cpu_count = str(psutil.cpu_count())
+        cpu_percent = str(psutil.cpu_percent())
+        total_ram = str(psutil.virtual_memory().total)
+        avail_ram = str(psutil.virtual_memory().available)
+        current_time = str(datetime.datetime.now().time())
+        
+        ServerData = {
+            "cpuCount":  cpu_count,
+            "cpuPercent": cpu_percent,
+            "totalRAM": total_ram,
+            "availRAM": avail_ram,
+            "currentTime": current_time
+		}
+        self.wfile.write(json.dumps(ServerData))
 
 
 def main():
