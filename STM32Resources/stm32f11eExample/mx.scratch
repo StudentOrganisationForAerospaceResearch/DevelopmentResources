@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
-<ProjectName>/home/enoch/ext/dev/soar/DevelopmentResources/STM32Resources/stm32f11e_example/\stm32f11e_example</ProjectName>
+<ProjectName>/home/natalia/Builds/DevelopmentResources/STM32Resources/stm32f11eExample/\stm32f11e_example</ProjectName>
+<ProjectNature>C</ProjectNature> 
 <CMSIS>../Drivers/CMSIS</CMSIS>
-<HAL_Driver>/home/enoch/STM32Cube/Repository//STM32Cube_FW_F4_V1.18.0/Drivers/CMSIS</HAL_Driver>
-
+<HAL_Driver>/home/natalia/STM32Cube/Repository//STM32Cube_FW_F4_V1.18.0/Drivers/CMSIS</HAL_Driver>
 <Toolchain>SW4STM32</Toolchain>
 <Version>0</Version>
 
 <filestoremove>
-	<file>
-	</file>
+    <file>
+    </file>
 </filestoremove>
 
 <inctoremove>
@@ -31,7 +31,7 @@
 			
     <usedDebug>true</usedDebug>
     	<debugprobe></debugprobe>
-    <optimization>6</optimization>
+    <optimization>2</optimization>
     <icfloc>0</icfloc>
     <Adefines>
         <define></define>
@@ -52,8 +52,6 @@
         <Cdefines>
             <define>USE_FULL_LL_DRIVER</define>
             <define>MBEDTLS_CONFIG_FILE=&quot;mbedtls_config.h&quot;</define>
-            <define>_TIMEVAL_DEFINED</define>
-            <define>_SYS_TIME_H_</define>
         </Cdefines>         
     </definestoremove>
     
@@ -73,13 +71,14 @@
 
     <underRoot>true</underRoot>
     	<copyAsReference>false</copyAsReference>
+ 
 	  		<sourceEntries>
 		    	<sourceEntry>
 		    		<name>Inc</name>
 		    	</sourceEntry>
-		    	<sourceEntry>
-		    		<name>Src</name>
-		    	</sourceEntry>
+                <sourceEntry>
+                        <name>Src</name>
+                </sourceEntry>
 		    	<sourceEntry>
 		    		<name>Drivers</name>
 		    	</sourceEntry>
