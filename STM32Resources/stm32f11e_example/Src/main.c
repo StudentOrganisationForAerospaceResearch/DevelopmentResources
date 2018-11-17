@@ -52,10 +52,12 @@
 #include "cmsis_os.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "math.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
+ADC_HandleTypeDef hadc1;
+
 osThreadId defaultTaskHandle;
 
 /* USER CODE BEGIN PV */
@@ -67,6 +69,7 @@ osThreadId blinkLightsTaskHandle;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_ADC1_Init(void);
 void StartDefaultTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
@@ -75,6 +78,7 @@ void blinkLightsTask(void const* argument);
 void externalLEDTask(void const* argument);
 void adcReadTask(void const* argument);
 void spiReadTask(void const* argument);
+void adcReadTest(void const* argument);
 
 /* USER CODE END PFP */
 
@@ -111,6 +115,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -227,6 +232,43 @@ void SystemClock_Config(void)
 
   /* SysTick_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
+}
+
+/* ADC1 init function */
+static void MX_ADC1_Init(void)
+{
+
+  ADC_ChannelConfTypeDef sConfig;
+
+    /**Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion) 
+    */
+  hadc1.Instance = ADC1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
+  hadc1.Init.Resolution = ADC_RESOLUTION_12B;
+  hadc1.Init.ScanConvMode = DISABLE;
+  hadc1.Init.ContinuousConvMode = ENABLE;
+  hadc1.Init.DiscontinuousConvMode = DISABLE;
+  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc1.Init.NbrOfConversion = 1;
+  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;
+  if (HAL_ADC_Init(&hadc1) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+    /**Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time. 
+    */
+  sConfig.Channel = ADC_CHANNEL_1;
+  sConfig.Rank = 1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_480CYCLES;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
 }
 
 /** Configure pins as 
@@ -434,13 +476,23 @@ void externalLEDTask(void const* argument)
 
 void adcReadTask(void const* argument)
 {
-    uint32_t prevWakeTime = osKernelSysTick();
+	volatile double vo = 0;  // The voltage across the 133k resistor
+	volatile uint16_t adcRead = 0; // Unsigned 16 bit value
+	uint32_t prevWakeTime = osKernelSysTick();
 
-    for (;;)
-    {
-        osDelayUntil(&prevWakeTime, 250);
+	HAL_ADC_Start(&hadc1);  // Enables ADC and starts conversion of regular channels
 
-    }
+	for (;;)
+	{
+		osDelayUntil(&prevWakeTime, 25);
+
+		if (HAL_ADC_PollForConversion(&hadc1, 25) == HAL_OK)
+		{
+			adcRead = HAL_ADC_GetValue(&hadc1);
+		}
+
+		vo = 3.3 / (pow(2, 12) - 1)* adcRead;    // Calculate voltage from the 12 bit ADC reading
+	}
 }
 
 void spiReadTask(void const* argument)
