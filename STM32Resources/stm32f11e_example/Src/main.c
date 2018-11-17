@@ -50,6 +50,7 @@
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
+#include "math.h"
 
 /* USER CODE BEGIN Includes */
 void adcReadTask(void const* argument);
@@ -486,30 +487,25 @@ void adcReadTask(void const* argument)
 {
     uint32_t prevWakeTime = osKernelSysTick();
 
-    for (;;)
-    {
-    	osDelayUntil(&prevWakeTime, 250);
+	osDelayUntil(&prevWakeTime, 250);
 
-		#include "math.h"
-        double vo = 0;  // The voltage across the 133k resistor
-        uint16_t adcRead = 0; // Unsigned 16 bit value
-        uint32_t prevWakeTime = osKernelSysTick();
+	volatile double vo = 0;  // The voltage across the 133k resistor
+ 	volatile uint16_t adcRead = 0; // Unsigned 16 bit value
 
-        HAL_ADC_Start(&hadc1);  // Enables ADC and starts conversion of regular channels
+	HAL_ADC_Start(&hadc1);  // Enables ADC and starts conversion of regular channels
 
-        while (1 != 1)
-        {
-        	osDelayUntil(&prevWakeTime, 25);
+	for (;;)
+	{
+    	osDelayUntil(&prevWakeTime, 25);
 
-        	if (HAL_ADC_PollForConversion(&hadc1, 25) == HAL_OK)
-        	{
-        		adcRead = HAL_ADC_GetValue(&hadc1);
-        	}
+      	if (HAL_ADC_PollForConversion(&hadc1, 25) == HAL_OK)
+       	{
+        	adcRead = HAL_ADC_GetValue(&hadc1);
+       	}
 
-        	vo = 3.3 / (pow(2, 12) - 1)* adcRead;    // Calculate voltage from the 12 bit ADC reading
-        }
+       	vo = 3.3 / (pow(2, 12) - 1)* adcRead;    // Calculate voltage from the 12 bit ADC reading
+   	}
 
-    }
 }
 
 /* USER CODE END 4 */
