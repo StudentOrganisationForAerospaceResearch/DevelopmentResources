@@ -50,7 +50,7 @@
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
-
+#include "math.h"
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -75,6 +75,9 @@ void StartDefaultTask(void const * argument);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 void blinkLightsTask(void const* argument);
+void externalLEDTask(void const* argument);
+void adcReadTask(void const* argument);
+void spiReadTask(void const* argument);
 
 /* USER CODE END PFP */
 
@@ -86,6 +89,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+
 
   /* USER CODE END 1 */
 
@@ -131,8 +135,18 @@ int main(void)
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
-    osThreadDef(blinkLightsThread, blinkLightsTask, osPriorityNormal, 1, configMINIMAL_STACK_SIZE);
-    blinkLightsTaskHandle = osThreadCreate(osThread(blinkLightsThread), NULL);
+  osThreadDef(blinkLightsThread, blinkLightsTask, osPriorityNormal, 1, configMINIMAL_STACK_SIZE);
+  blinkLightsTaskHandle = osThreadCreate(osThread(blinkLightsThread), NULL);
+
+  osThreadDef(externalLEDThread, externalLEDTask, osPriorityNormal, 1, configMINIMAL_STACK_SIZE);
+  blinkLightsTaskHandle = osThreadCreate(osThread(externalLEDThread), NULL);
+
+  osThreadDef(adcReadThread, adcReadTask, osPriorityNormal, 1, configMINIMAL_STACK_SIZE);
+  blinkLightsTaskHandle = osThreadCreate(osThread(adcReadThread), NULL);
+
+  osThreadDef(spiReadThread, spiReadTask, osPriorityNormal, 1, configMINIMAL_STACK_SIZE);
+  blinkLightsTaskHandle = osThreadCreate(osThread(spiReadThread), NULL);
+
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -422,7 +436,7 @@ void blinkLightsTask(void const* argument)
         switch (counter)
         {
             case 0:
-                HAL_GPIO_TogglePin(external_GPIO_Port, external_Pin);
+                HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
                 counter = 1;
                 break;
 
@@ -441,6 +455,51 @@ void blinkLightsTask(void const* argument)
                 HAL_GPIO_TogglePin(LD6_GPIO_Port, LD6_Pin);
                 break;
         }
+    }
+}
+
+void externalLEDTask(void const* argument)
+{
+    uint32_t prevWakeTime = osKernelSysTick();
+
+    for (;;)
+    {
+        osDelayUntil(&prevWakeTime, 250);
+
+    }
+}
+
+void adcReadTask(void const* argument)
+{
+
+	volatile double vo =0;
+	volatile uint16_t adcRead = 0;
+    uint32_t prevWakeTime = osKernelSysTick();
+
+    HAL_ADC_Start(&hadc1);  // Enables ADC and starts conversion of regular channels
+
+    for (;;)
+    {
+        osDelayUntil(&prevWakeTime, 250);
+        if (HAL_ADC_PollForConversion(&hadc1, 25) == HAL_OK)
+            {
+                adcRead = HAL_ADC_GetValue(&hadc1);
+            }
+
+            vo = 3.3 / (pow(2, 12) - 1)* adcRead;    // Calculate voltage from the 12 bit ADC reading
+
+
+    }
+}
+
+void spiReadTask(void const* argument)
+{
+    uint32_t prevWakeTime = osKernelSysTick();
+
+    for (;;)
+    {
+        osDelayUntil(&prevWakeTime, 250);
+
     }
 }
 
