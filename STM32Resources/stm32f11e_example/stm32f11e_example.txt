@@ -1,11 +1,15 @@
 Configuration	stm32f11e_example
 STM32CubeMX 	4.27.0
-Date	11/17/2018
+Date	12/01/2018
 MCU	STM32F411VETx
 
 
 
 PERIPHERALS	MODES	FUNCTIONS	PINS
+ADC1	IN1	ADC1_IN1	PA1
+SPI1	Full-Duplex Master	SPI1_MISO	PA6
+SPI1	Full-Duplex Master	SPI1_MOSI	PA7
+SPI1	Full-Duplex Master	SPI1_SCK	PA5
 SYS	TIM1	SYS_VS_tim1	VP_SYS_VS_tim1
 
 
@@ -22,10 +26,11 @@ Pin Nb	PINs	FUNCTIONs	LABELs
 15	PC0	GPIO_Output	OTG_FS_PowerSwitchOn
 18	PC3*	I2S2_SD	PDM_OUT [MP45DT02_DOUT]
 23	PA0-WKUP	GPIO_EXTI0	
+24	PA1	ADC1_IN1	ADC-test
 29	PA4*	I2S3_WS	I2S3_WS [CS43L22_LRCK]
-30	PA5*	SPI1_SCK	SPI1_SCK [L3GD20_SC/SPC]
-31	PA6*	SPI1_MISO	SPI1_MISO [L3GD20_AS0/SDO]
-32	PA7*	SPI1_MOSI	SPI1_MOSI [L3GD20_SDA/SDI/SDO]
+30	PA5	SPI1_SCK	SPI1_SCK [L3GD20_SC/SPC]
+31	PA6	SPI1_MISO	SPI1_MISO [L3GD20_AS0/SDO]
+32	PA7	SPI1_MOSI	SPI1_MOSI [L3GD20_SDA/SDI/SDO]
 47	PB10*	I2S2_CK	CLK_IN [MP45DT02_CLK]
 51	PB12*	I2S2_WS	
 55	PD8	GPIO_Output	LD7
@@ -55,9 +60,9 @@ SOFTWARE PROJECT
 
 Project Settings : 
 Project Name : stm32f11e_example
-Project Folder : /Users/camila/DevelopmentResources/STM32Resources/stm32f11e_example
+Project Folder : /Users/camila/Documents/DevelopmentResources/STM32Resources/stm32f11e_example
 Toolchain / IDE : SW4STM32
-Firmware Package Name and Version : STM32Cube FW_F4 V1.18.0
+Firmware Package Name and Version : STM32Cube FW_F4 V1.21.0
 
 
 Code Generation Settings : 

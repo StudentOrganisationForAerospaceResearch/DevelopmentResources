@@ -10,7 +10,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * Copyright (c) 2018 STMicroelectronics International N.V. 
+  * Copyright (c) 2019 STMicroelectronics International N.V. 
   * All rights reserved.
   *
   * Redistribution and use in source and binary forms, with or without 
@@ -50,7 +50,6 @@
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
-#include "math.h"
 
 /* USER CODE BEGIN Includes */
 void adcReadTask(void const* argument);
@@ -58,6 +57,10 @@ void adcReadTask(void const* argument);
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
+
+SPI_HandleTypeDef hspi1;
+
+UART_HandleTypeDef huart2;
 
 osThreadId defaultTaskHandle;
 
@@ -71,11 +74,14 @@ osThreadId blinkLightsTaskHandle;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
+static void MX_SPI1_Init(void);
+static void MX_USART2_UART_Init(void);
 void StartDefaultTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 void blinkLightsTask(void const* argument);
+void spiReadTask(void const* argument);
 
 /* USER CODE END PFP */
 
@@ -113,6 +119,8 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC1_Init();
+  MX_SPI1_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -134,12 +142,12 @@ int main(void)
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
-  osThreadDef(adcReadThread, adcReadTask, osPriorityNormal, 1, configMINIMAL_STACK_SIZE);
-  blinkLightsTaskHandle = osThreadCreate(osThread(adcReadThread), NULL);
-
   /* USER CODE BEGIN RTOS_THREADS */
     osThreadDef(blinkLightsThread, blinkLightsTask, osPriorityNormal, 1, configMINIMAL_STACK_SIZE);
     blinkLightsTaskHandle = osThreadCreate(osThread(blinkLightsThread), NULL);
+
+    osThreadDef(spiReadThread, spiReadTask, osPriorityNormal, 1, configMINIMAL_STACK_SIZE);
+    blinkLightsTaskHandle = osThreadCreate(osThread(spiReadThread), NULL);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_QUEUES */
@@ -261,6 +269,49 @@ static void MX_ADC1_Init(void)
 
 }
 
+/* SPI1 init function */
+static void MX_SPI1_Init(void)
+{
+
+  /* SPI1 parameter configuration*/
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_HIGH;
+  hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+}
+
+/* USART2 init function */
+static void MX_USART2_UART_Init(void)
+{
+
+  huart2.Instance = USART2;
+  huart2.Init.BaudRate = 9600;
+  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.StopBits = UART_STOPBITS_1;
+  huart2.Init.Parity = UART_PARITY_NONE;
+  huart2.Init.Mode = UART_MODE_TX_RX;
+  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart2) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+}
+
 /** Configure pins as 
         * Analog 
         * Input 
@@ -269,9 +320,6 @@ static void MX_ADC1_Init(void)
         * EXTI
      PC3   ------> I2S2_SD
      PA4   ------> I2S3_WS
-     PA5   ------> SPI1_SCK
-     PA6   ------> SPI1_MISO
-     PA7   ------> SPI1_MOSI
      PB10   ------> I2S2_CK
      PB12   ------> I2S2_WS
      PC7   ------> I2S3_MCK
@@ -354,14 +402,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Alternate = GPIO_AF6_SPI3;
   HAL_GPIO_Init(I2S3_WS_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : SPI1_SCK_Pin SPI1_MISO_Pin SPI1_MOSI_Pin */
-  GPIO_InitStruct.Pin = SPI1_SCK_Pin|SPI1_MISO_Pin|SPI1_MOSI_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : CLK_IN_Pin PB12 */
   GPIO_InitStruct.Pin = CLK_IN_Pin|GPIO_PIN_12;
@@ -506,6 +546,23 @@ void adcReadTask(void const* argument)
        	vo = 3.3 / (pow(2, 12) - 1)* adcRead;    // Calculate voltage from the 12 bit ADC reading
    	}
 
+}
+
+void spiReadTask(void const* argument)
+{
+    uint32_t prevWakeTime = osKernelSysTick();
+    volatile uint8_t data_in;
+    // Setting the MSB (first) bit to 1 puts it in read mode. 0x0F is the address of the Who Am I register
+    volatile uint8_t who_am_i_address = 0x80 | 0x0F; 	// 1000_0000 | 0000_1111 -> 1000_1111
+
+    for(;;)
+    {
+          osDelayUntil(&prevWakeTime, 25);
+    HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET); // Pull CS GPIO Pin low to start data transmission
+    HAL_SPI_Transmit(&hspi1, &who_am_i_address, 1, 50);
+    HAL_SPI_Receive(&hspi1, &data_in, 1, 50);
+    HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_SET);   // Pull CS GPIO Pin high to end data transmission
+    }
 }
 
 /* USER CODE END 4 */
