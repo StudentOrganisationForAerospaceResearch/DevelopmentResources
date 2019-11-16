@@ -39,6 +39,5 @@ STM32L152-Discovery.elf.launch
 .dep/
 
 # Other
-Makefile
 .fuse*
 /Debug/
