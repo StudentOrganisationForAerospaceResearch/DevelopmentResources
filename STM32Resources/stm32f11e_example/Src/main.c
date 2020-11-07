@@ -344,8 +344,8 @@ void blinkLightsTask(void const* argument)
     uint32_t prevWakeTime = osKernelSysTick();
     uint16_t counter = 0;
 
-    for (;;)
-    {
+while(1)
+{
         osDelayUntil(&prevWakeTime, 250);
 
         switch (counter)
