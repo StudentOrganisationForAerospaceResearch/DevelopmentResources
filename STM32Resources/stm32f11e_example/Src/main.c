@@ -377,9 +377,9 @@ void externalLEDTask(void const* argument)
 {
     uint32_t prevWakeTime = osKernelSysTick();
 
-    for (;;)
+    while (true)
     {
-        osDelayUntil(&prevWakeTime, 250);
+        osDelayUntil(&prevWakeTime, 500);
 
     }
 }
